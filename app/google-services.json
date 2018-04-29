@@ -1,0 +1,144 @@
+{
+  "project_info": {
+    "project_number": "58885590694",
+    "firebase_url": "https://prueba-firebase-8d8eb.firebaseio.com",
+    "project_id": "prueba-firebase-8d8eb",
+    "storage_bucket": "prueba-firebase-8d8eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58885590694:android:e7720d8ee3e0b5f6",
+        "android_client_info": {
+          "package_name": "co.com.hgr.cestadelacompra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58885590694-b7ig0s3g6obalaldrd6d1668370hqa86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.com.hgr.cestadelacompra",
+            "certificate_hash": "9c19e59139eae1520cce6dc0b9ea9cb29c031031"
+          }
+        },
+        {
+          "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRyi-dyiNF-BCTTeqKBZz4K22utFnPIqs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58885590694:android:208d3608df31245f",
+        "android_client_info": {
+          "package_name": "com.cestadelacompra.triboga.cestadelacomprahgr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58885590694-isbpitd146qv3cg022jaffor4kkpgbjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cestadelacompra.triboga.cestadelacomprahgr",
+            "certificate_hash": "9c19e59139eae1520cce6dc0b9ea9cb29c031031"
+          }
+        },
+        {
+          "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRyi-dyiNF-BCTTeqKBZz4K22utFnPIqs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58885590694:android:ec54de5749b765af",
+        "android_client_info": {
+          "package_name": "com.cestadelacompra.triboga.firebaseprueba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58885590694-0t2ulavkiuovi2er5nqiqkrdgsnmsf9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cestadelacompra.triboga.firebaseprueba",
+            "certificate_hash": "9c19e59139eae1520cce6dc0b9ea9cb29c031031"
+          }
+        },
+        {
+          "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRyi-dyiNF-BCTTeqKBZz4K22utFnPIqs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58885590694-vkpa7dak3nupat2tbaks7ehtueil29g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
