@@ -74,6 +74,7 @@ public class DatosTiendaActivity extends AppCompatActivity {
                 Container.tiendaLogueada.setEmailPedidos(String.valueOf(edEmailPedidos.getText()));
                 Container.tiendaLogueada.setHorario(String.valueOf(edIdDiasApertura.getText() + " -- " + String.valueOf(edIdHorasApertura.getText())));
                 Container.tiendaLogueada.setTelefono(String.valueOf(edTelefonoTienda.getText()));
+                Container.tiendaLogueada.setEmailDuenio(Container.personaLogueada.getEmail());
 
                 ayudanteBBDD=new AyudanteBBDD();
                 ayudanteBBDD.modoTiendas();

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Tienda {
 
-    private List<String> emailDuenio;
+    private String emailDuenio;
     private String nombre;
     private String localizacion;
     private String horario;
@@ -20,7 +20,7 @@ public class Tienda {
 
     }
 
-    public Tienda(List<String> emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono) {
+    public Tienda(String emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono) {
         this.emailDuenio = emailDuenio;
         this.nombre = nombre;
         this.localizacion = localizacion;
@@ -30,11 +30,11 @@ public class Tienda {
 
     }
 
-    public List<String> getEmailDuenio() {
+    public String getEmailDuenio() {
         return emailDuenio;
     }
 
-    public void setEmailDuenio(List<String> emailDuenio) {
+    public void setEmailDuenio(String emailDuenio) {
         this.emailDuenio = emailDuenio;
     }
 

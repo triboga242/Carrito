@@ -17,7 +17,7 @@ import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
 
 /**
- * TODO
+ * TODO Creo que voy a obviar esta parte, ya que con el logeo de Google tengo el nombre, tlfn y email.
  * Preguntar si el email del usuario ya está en la bbdd, si es así, pasar directamente a la
  * actividad de lista de tiendas.
  *
@@ -57,10 +57,10 @@ public class DatosCompradorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UsuarioPersona persona = new UsuarioPersona(
-                        nombre.getText().toString(),
+                        usuario.getDisplayName(),
                         apellidos.getText().toString(),
                         usuario.getEmail(),
-                        telefono.getText().toString());
+                        usuario.getPhoneNumber());
                 ayudanteBBDD.aniadeUnaPersona(persona);
             }
         });
@@ -71,11 +71,23 @@ public class DatosCompradorActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
-        //Comentar para que no la salte automaticamente
-        ayudanteBBDD.compruebaUsuarioLogueado(this,
-                new Intent(DatosCompradorActivity.this,
-                        VendedorCompradorActivity.class));
-
+        if (ayudanteBBDD.compruebaUsuarioRegistrado()) {
+            ayudanteBBDD.compruebaUsuarioLogueado(this,
+                    new Intent(DatosCompradorActivity.this,
+                            VendedorCompradorActivity.class));
+        } else {
+            UsuarioPersona persona = new UsuarioPersona(
+                    usuario.getDisplayName(),
+                    apellidos.getText().toString(),
+                    usuario.getEmail(),
+                    usuario.getPhoneNumber());
+            ayudanteBBDD.aniadeUnaPersona(persona);
+            ayudanteBBDD.compruebaUsuarioLogueado(this,
+                    new Intent(DatosCompradorActivity.this,
+                            VendedorCompradorActivity.class));
+        }
     }
 }
+
+
+

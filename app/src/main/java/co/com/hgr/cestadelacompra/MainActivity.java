@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import utilesbbdd.Container;
+
 public class MainActivity extends AppCompatActivity {
 
     SignInButton loginbtn;
@@ -48,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (firebaseAuth.getCurrentUser()!=null){
                     Toast.makeText(getApplicationContext(), "usuario "+user.getPhotoUrl(),Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(MainActivity.this, DatosCompradorActivity.class);
+
+                    Container.personaLogueada.setEmail(user.getEmail());
+                    Container.personaLogueada.setNombre(user.getDisplayName());
+                    Container.personaLogueada.setTelefono(user.getPhoneNumber());
+
                     startActivity(intent);
                 }
             }

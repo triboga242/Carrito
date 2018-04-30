@@ -54,7 +54,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".HorariosActivity"></activity>
+        <activity android:name=".HorariosActivity" />
+        <activity android:name=".EleccionTiendaVendedorActivity"></activity>
     </application>
 
 </manifest>

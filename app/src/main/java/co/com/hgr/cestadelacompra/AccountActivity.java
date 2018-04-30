@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import holders.UsuarioHolder;
 import modelos.UsuarioPersona;
+import utilesbbdd.AyudanteBBDD;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -38,6 +39,9 @@ public class AccountActivity extends AppCompatActivity {
     //Autenticaion de usuario
     private FirebaseAuth mAuth;
     private FirebaseUser usuario;
+
+    //Ayudante para la bbdd
+    private AyudanteBBDD ayudanteBBDD;
 
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -61,8 +65,11 @@ public class AccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         usuario=mAuth.getCurrentUser();
 
+        ayudanteBBDD=new AyudanteBBDD();
+        ayudanteBBDD.modoPersonas();
 
-        mAuth = FirebaseAuth.getInstance();
+
+      /**  mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener(){
 
             @Override
@@ -73,14 +80,19 @@ public class AccountActivity extends AppCompatActivity {
                 if (firebaseAuth.getCurrentUser()!=null){
                     Toast.makeText(getApplicationContext(), "usuario "+user.getPhotoUrl(),Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AccountActivity.this, VendedorCompradorActivity.class);
-                    startActivity(intent);
+                   // startActivity(intent);
                 }
             }
         };
 
         Log.e(TAGLOG, usuario.getEmail().toString());
 
+*/
 
+      if (ayudanteBBDD.compruebaUsuarioRegistrado()){
+          Intent intent = new Intent(AccountActivity.this, VendedorCompradorActivity.class);
+           startActivity(intent);
+      }
 
         RecyclerView recyclerView=(RecyclerView) findViewById(R.id.lstUsuarios);
         recyclerView.setHasFixedSize(true);
