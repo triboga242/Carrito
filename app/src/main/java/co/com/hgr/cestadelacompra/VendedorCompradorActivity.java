@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Elegir entre modo vendedor y modo comprador
+ * TODO activar boton comprador
+ * TODO Del boton comprador ha de ir a una ventana donde muestre lista de las tiendas que tiene registradas y un boton de registrar nueva tienda y ahi a registrar tiendas o a lista de alimentos de la tienda seleccionada
+ */
 public class VendedorCompradorActivity extends AppCompatActivity {
 
 

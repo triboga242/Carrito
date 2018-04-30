@@ -103,9 +103,9 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                UsuarioPersona persona=new UsuarioPersona("jeray", "juanez juanez", "juan@juanez.com", 66666666);
-                UsuarioPersona persona2=new UsuarioPersona("moises", "juanez juanez", "juan@juanez.com", 111111111);
-                UsuarioPersona persona3=new UsuarioPersona("abraham", "juanez juanez", "juan@juanez.com", 222222222);
+                UsuarioPersona persona=new UsuarioPersona("jeray", "juanez juanez", "juan@juanez.com", "66666666");
+                UsuarioPersona persona2=new UsuarioPersona("moises", "juanez juanez", "juan@juanez.com", "111111111");
+                UsuarioPersona persona3=new UsuarioPersona("abraham", "juanez juanez", "juan@juanez.com", "222222222");
 
                 dbUsuario.push().setValue(persona);
                 dbUsuario.push().setValue(persona2);

@@ -9,14 +9,14 @@ public class UsuarioPersona {
     private String nombre;
     private String apellidos;
     private String email;
-    private int telefono;
+    private String telefono;
 
 
     public UsuarioPersona() {
 
     }
 
-    public UsuarioPersona(String nombre, String apellidos, String email, int telefono) {
+    public UsuarioPersona(String nombre, String apellidos, String email, String telefono) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -47,11 +47,11 @@ public class UsuarioPersona {
         this.email = email;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

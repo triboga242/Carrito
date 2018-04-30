@@ -25,31 +25,33 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Nombre Negocio" />
 
         <EditText
+            android:id="@+id/dias_apertura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Horas Apertura" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/horario_apertura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName|time"
+            android:text="Horario Apertura" />
 
         <EditText
+            android:id="@+id/telefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="phone" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/email_pedidos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

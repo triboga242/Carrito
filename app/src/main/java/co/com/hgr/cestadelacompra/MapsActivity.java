@@ -47,6 +47,7 @@ import java.util.Date;
 import java.util.Map;
 
 import modelos.LocationData;
+import utilesbbdd.Container;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, LocationListener {
@@ -56,6 +57,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Marcador posicion actual
     private Marker markerAhora;
     private MarkerOptions markerOptions;
+    //Utiles para guardar y mostrar la direccion
+    private ArrayList<Address>direccionCompleta;
     //Latitud y longitud actual
     private LatLng latlongAhora;
     //Base de datos
@@ -130,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnGuardarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                guardarLaDireccion();
             }
         });
 
@@ -157,15 +160,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
+     * Guarda la direccion selecionada en la bbdd
+     * TODO que vaya a la actividad de la lista de alimentos a la venta
+     *
+     */
+    private void guardarLaDireccion(){
+
+        Container.tiendaLogueada.setLocalizacion(direccionCompleta.toString());
+
+
+
+    }
+
+    /**
      * Busca el codigo postal introducido
-     * TODO
-     * Aceptar solo numeros, validar codigo postal
-     * poner que solo sea españa
+     *
+     * TODO Aceptar solo numeros, validar codigo postal poner que solo sea españa
+     *
      *
      */
     private void buscarLaDireccion(){
 
-        ArrayList<Address>direccionCompleta=null;
+        direccionCompleta=null;
         String direccionAbuscar= buscarDireccion.getText().toString();
 
         if (direccionAbuscar!=null || !direccionAbuscar.equals("")){
@@ -206,13 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         setListeners();

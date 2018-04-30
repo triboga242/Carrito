@@ -14,17 +14,20 @@ public class Tienda {
     private String localizacion;
     private String horario;
     private String emailPedidos;
+    private String telefono;
 
     public Tienda (){
 
     }
 
-    public Tienda(List<String> emailDuenio, String nombre, String localizacion, String horario, String emailPedidos) {
+    public Tienda(List<String> emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono) {
         this.emailDuenio = emailDuenio;
         this.nombre = nombre;
         this.localizacion = localizacion;
         this.horario = horario;
         this.emailPedidos = emailPedidos;
+        this.telefono=telefono;
+
     }
 
     public List<String> getEmailDuenio() {
@@ -67,6 +70,14 @@ public class Tienda {
         this.emailPedidos = emailPedidos;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     @Override
     public String toString() {
         return "Tienda{" +
@@ -75,6 +86,7 @@ public class Tienda {
                 ", localizacion='" + localizacion + '\'' +
                 ", horario='" + horario + '\'' +
                 ", emailPedidos='" + emailPedidos + '\'' +
+                ", telefono='" + telefono + '\'' +
                 '}';
     }
 }
