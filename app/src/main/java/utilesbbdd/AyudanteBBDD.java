@@ -3,6 +3,7 @@ package utilesbbdd;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import modelos.Tienda;
 import modelos.UsuarioPersona;
 
 /**
@@ -24,4 +25,10 @@ public class AyudanteBBDD {
         dbUsuario.push().setValue(usuarioPersona);
     }
 
+    public void modoTiendas(){
+        dbUsuario=FirebaseDatabase.getInstance().getReference().child("tienda");
+    }
+    public void aniadeUnaTienda(Tienda tienda){
+        dbUsuario.push().setValue(tienda);
+    }
 }

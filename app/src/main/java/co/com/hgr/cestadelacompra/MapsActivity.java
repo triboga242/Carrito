@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,11 +16,16 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -33,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,23 +51,142 @@ import modelos.LocationData;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, LocationListener {
 
+    //Mapa
     private GoogleMap mMap;
+    //Marcador posicion actual
     private Marker markerAhora;
+    private MarkerOptions markerOptions;
+    //Latitud y longitud actual
     private LatLng latlongAhora;
+    //Base de datos
     private DatabaseReference mDatabase;
+    //Elementos de la vista
+    private TextView direccion;
+    private EditText buscarDireccion;
+    private Button btnBuscarDireccion;
+    private Button btnGuardarDireccion;
+
+    //Geolocalodaor para las direcciones
+    private Geocoder geocoder;
+
+    //Listener para el arrastre del marcador
+    private GoogleMap.OnMarkerDragListener onMarkerDragListener;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //MapFragment mapFragment = (MapFragment) getFragmentManager()
+        //        .findFragmentById(R.id.map);
+        //mapFragment.getMapAsync(this);
+       setElementosVista();
 
         startGettingLocations();
-        mDatabase= FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         getMarkers();
+
+
+        geocoder = new Geocoder(this);
+
+
+
+
+    }
+
+    /***
+     * busca y asigna los elementos de la vista
+     */
+    public void setElementosVista(){
+
+        direccion = (TextView) findViewById(R.id.textView);
+        buscarDireccion = (EditText) findViewById(R.id.editText);
+        btnBuscarDireccion=(Button) findViewById(R.id.button4);
+        btnGuardarDireccion=(Button)findViewById(R.id.button5);
+
+    }
+
+    /**
+     * Inicializa y asigna los listeners
+     */
+    public void setListeners(){
+
+        btnBuscarDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buscarLaDireccion();
+            }
+        });
+
+        /**
+         * TODO hacer guardarLaDireccion(){}
+         */
+        btnGuardarDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        onMarkerDragListener = new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+                direccion.setText(String.valueOf(markerAhora.getPosition()));
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                setTextoDireccion();
+            }
+        };
+
+        mMap.setOnMarkerDragListener(onMarkerDragListener);
+
+
+    }
+
+    /**
+     * Busca el codigo postal introducido
+     * TODO
+     * Aceptar solo numeros, validar codigo postal
+     * poner que solo sea españa
+     *
+     */
+    private void buscarLaDireccion(){
+
+        ArrayList<Address>direccionCompleta=null;
+        String direccionAbuscar= buscarDireccion.getText().toString();
+
+        if (direccionAbuscar!=null || !direccionAbuscar.equals("")){
+            try {
+                direccionCompleta= (ArrayList<Address>) geocoder.getFromLocationName(direccionAbuscar, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Address direccionAmostrar = direccionCompleta.get(0);
+        LatLng localizacionAmostrar = new LatLng(direccionAmostrar.getLatitude(), direccionAmostrar.getLongitude());
+        markerAhora.remove();
+        markerOptions=new MarkerOptions();
+        markerOptions.position(localizacionAmostrar);
+        markerOptions.draggable(true);
+        markerAhora.setTitle(direccionCompleta.get(0).getAddressLine(0));
+
+
+        markerAhora = mMap.addMarker(markerOptions);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(localizacionAmostrar));
     }
 
 
@@ -75,9 +202,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-/*
+
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -87,9 +215,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        setListeners();
 
-*/
-        //mMap.setMyLocationEnabled(true);
+
+        mMap.setMyLocationEnabled(true);
 
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setAllGesturesEnabled(true);
@@ -98,12 +227,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setMapToolbarEnabled(true);
 
 
-
-
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().draggable(true).position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+    }
+
+    /**
+     * Pone la direccion en el textview
+     */
+    public void setTextoDireccion(){
+
+        ArrayList<Address>direccionCompleta=null;
+        try {
+
+            direccionCompleta= (ArrayList<Address>) geocoder.getFromLocation(
+                            markerAhora.getPosition().latitude,
+                            markerAhora.getPosition().longitude,
+                            1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        String direccionAmostrar=" 0 " + direccionCompleta.get(0).getAddressLine(0);
+        direccionAmostrar+= " 1 " + direccionCompleta.get(0).getAddressLine(1);
+        direccionAmostrar+=" 2 " + direccionCompleta.get(0).getAddressLine(2);
+
+        direccion.setText(String.valueOf(direccionAmostrar));
     }
 
     @Override
@@ -115,23 +268,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
 
 
-
-        if (markerAhora!=null){
+        if (markerAhora != null) {
             markerAhora.remove();
         }
         latlongAhora = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions=new MarkerOptions();
+        markerOptions = new MarkerOptions();
         markerOptions.position(latlongAhora);
         markerOptions.title("Ahora");
         markerOptions.draggable(true);
-        markerAhora=mMap.addMarker(markerOptions);
+        markerAhora = mMap.addMarker(markerOptions);
 
-        CameraPosition cameraPosition= new CameraPosition.Builder().zoom(15).target(latlongAhora).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().zoom(15).target(latlongAhora).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        LocationData locationData=new LocationData(location.getLatitude(), location.getLongitude());
+        LocationData locationData = new LocationData(location.getLatitude(), location.getLongitude());
         mDatabase.child("location").child(String.valueOf(new Date().getTime())).setValue(locationData);
 
+        direccion.setText(String.valueOf(location.getLatitude()));
     }
 
     @Override
@@ -259,15 +412,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "Não é possível obter a localização", Toast.LENGTH_SHORT).show();
         }
     }
-    private void getMarkers(){
+
+    private void getMarkers() {
 
         mDatabase.child("location").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //Get map of users in datasnapshot
-                        if (dataSnapshot.getValue() != null){}
-                            //getAllLocations((Map<String,Object>) dataSnapshot.getValue());
+                        if (dataSnapshot.getValue() != null) {
+                        }
+                        //getAllLocations((Map<String,Object>) dataSnapshot.getValue());
                     }
 
                     @Override
@@ -277,16 +432,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
     }
 
-    private void getAllLocations(Map<String,Object> locations) {
+    private void getAllLocations(Map<String, Object> locations) {
 
 
-
-
-        for (Map.Entry<String, Object> entry : locations.entrySet()){
+        for (Map.Entry<String, Object> entry : locations.entrySet()) {
 
             Date newDate = new Date(Long.valueOf(entry.getKey()));
             Map singleLocation = (Map) entry.getValue();
-            LatLng latLng = new LatLng((Double) singleLocation.get("latitude"), (Double)singleLocation.get("longitude"));
+            LatLng latLng = new LatLng((Double) singleLocation.get("latitude"), (Double) singleLocation.get("longitude"));
             addGreenMarker(newDate, latLng);
 
         }
@@ -303,4 +456,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(markerOptions);
     }
 
-    }
+}
