@@ -68,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText buscarDireccion;
     private Button btnBuscarDireccion;
     private Button btnGuardarDireccion;
+    private String direccionAmostrar;
 
     //Geolocalodaor para las direcciones
     private Geocoder geocoder;
@@ -159,17 +160,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
     /**
      * Guarda la direccion selecionada en la bbdd
-     * TODO que vaya a la actividad de la lista de alimentos a la venta
+     * TODO que vaya a la actividad de guadar la tienda (Acividad anterior)
      *
      */
     private void guardarLaDireccion(){
 
         Container.tiendaLogueada.setLocalizacion(direccionCompleta.toString());
-
-
-
+        Container.tiendaLogueada.setDireccion(direccionAmostrar);
+        finish();
     }
 
     /**
@@ -262,7 +263,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-        String direccionAmostrar=" 0 " + direccionCompleta.get(0).getAddressLine(0);
+        direccionAmostrar=" 0 " + direccionCompleta.get(0).getAddressLine(0);
         direccionAmostrar+= " 1 " + direccionCompleta.get(0).getAddressLine(1);
         direccionAmostrar+=" 2 " + direccionCompleta.get(0).getAddressLine(2);
 

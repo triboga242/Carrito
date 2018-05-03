@@ -1,8 +1,10 @@
 package utilesbbdd;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,9 +13,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.com.hgr.cestadelacompra.DatosCompradorActivity;
 import co.com.hgr.cestadelacompra.VendedorCompradorActivity;
@@ -52,10 +56,13 @@ public class AyudanteBBDD {
     }
 
     public void modoTiendas() {
-        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(usuario.getEmail());
+        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda");
     }
 
     public void aniadeUnaTienda(Tienda tienda) {
+        String usuarioSinPuntos = usuario.getEmail().replaceAll("\\.", "_");
+        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(usuarioSinPuntos);
+
         dbUsuario.push().setValue(tienda);
     }
 
@@ -124,4 +131,31 @@ public class AyudanteBBDD {
         return existe[0];
     }
 
+    public ArrayList<Tienda> traerTiendasPropias(){
+        final List[] tiendasPropias = new List[]{new ArrayList<>()};
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tienda").child(usuario.getEmail());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<Tienda>> t = new GenericTypeIndicator<List<Tienda>>() {};
+
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+
+                        tiendasPropias[0] =dataSnapshot.getValue(t);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        return (ArrayList<Tienda>) tiendasPropias[0];
+    }
 }

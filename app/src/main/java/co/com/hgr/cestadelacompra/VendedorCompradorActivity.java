@@ -8,8 +8,8 @@ import android.widget.Button;
 
 /**
  * Elegir entre modo vendedor y modo comprador
- * TODO activar boton comprador
- * TODO Del boton comprador ha de ir a una ventana donde muestre lista de las tiendas que tiene registradas y un boton de registrar nueva tienda y ahi a registrar tiendas o a lista de alimentos de la tienda seleccionada
+ * TODO activar botonEditarTienda comprador
+ * TODO Del botonEditarTienda vendedor ha de ir a una ventana donde muestre lista de las tiendas que tiene registradas y un botonEditarTienda de registrar nueva tienda y ahi a registrar tiendas o a lista de alimentos de la tienda seleccionada
  */
 public class VendedorCompradorActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class VendedorCompradorActivity extends AppCompatActivity {
         btnVendedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(VendedorCompradorActivity.this, DatosTiendaActivity.class);
+                Intent intent = new Intent(VendedorCompradorActivity.this, EleccionTiendaVendedorActivity.class);
                 startActivity(intent);
             }
         });

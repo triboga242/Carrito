@@ -1,7 +1,6 @@
 package modelos;
 
-import java.util.HashMap;
-import java.util.List;
+import utilesbbdd.Container;
 
 /**
  * Created by Triboga on 22/4/18.
@@ -15,19 +14,28 @@ public class Tienda {
     private String horario;
     private String emailPedidos;
     private String telefono;
+    private String direccion;
 
-    public Tienda (){
+    public Tienda() {
 
+        this.emailDuenio = Container.personaLogueada.getEmail();
+        this.nombre = "";
+        this.localizacion = "";
+        this.horario = "";
+        this.emailPedidos = "";
+        this.telefono = "";
+        this.direccion = "";
     }
 
-    public Tienda(String emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono) {
+
+    public Tienda(String emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono, String direccion) {
         this.emailDuenio = emailDuenio;
         this.nombre = nombre;
         this.localizacion = localizacion;
         this.horario = horario;
         this.emailPedidos = emailPedidos;
-        this.telefono=telefono;
-
+        this.telefono = telefono;
+        this.direccion = direccion;
     }
 
     public String getEmailDuenio() {
@@ -78,12 +86,20 @@ public class Tienda {
         this.telefono = telefono;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     @Override
     public String toString() {
         return "Tienda{" +
                 "emailDuenio=" + emailDuenio +
                 ", nombre='" + nombre + '\'' +
-                ", localizacion='" + localizacion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 ", horario='" + horario + '\'' +
                 ", emailPedidos='" + emailPedidos + '\'' +
                 ", telefono='" + telefono + '\'' +
