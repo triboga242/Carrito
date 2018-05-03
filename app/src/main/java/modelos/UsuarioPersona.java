@@ -9,6 +9,9 @@ public class UsuarioPersona {
     private String nombre;
     private String apellidos;
     private String email;
+
+
+    private String emailFB;
     private String telefono;
 
 
@@ -45,6 +48,14 @@ public class UsuarioPersona {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmailFB() {
+        return emailFB;
+    }
+
+    public void setEmailFB(String emailFB) {
+        this.emailFB = emailFB;
     }
 
     public String getTelefono() {

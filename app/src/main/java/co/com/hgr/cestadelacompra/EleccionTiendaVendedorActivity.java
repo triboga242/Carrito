@@ -15,11 +15,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import holders.TiendaHolder;
 import modelos.Tienda;
+import utilesbbdd.AyudanteBBDD;
+import utilesbbdd.Container;
 
 public class EleccionTiendaVendedorActivity extends AppCompatActivity {
 
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference dbUsuario;
+    private AyudanteBBDD ayudanteBBDD;
 
     private Button tiendaNueva;
 
@@ -27,8 +30,8 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eleccion_tienda_vendedor);
-        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda");
-
+        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
+        ayudanteBBDD = new AyudanteBBDD();
         botonTiendaNueva();
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_tiendas);
@@ -43,7 +46,7 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
                     public void populateViewHolder(final TiendaHolder tiendaHolder0, Tienda tienda0, int posicion) {
                         tiendaHolder0.setNombre(tienda0.getNombre());
                         tiendaHolder0.setHorario(tienda0.getHorario());
-                        tiendaHolder0.setDireccion(tienda0.getLocalizacion());
+                        tiendaHolder0.setDireccion(tienda0.getDireccion());
                         tiendaHolder0.setBotonEditar();
                         tiendaHolder0.setBotonArticulosTienda();
 
@@ -51,7 +54,8 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Toast.makeText(EleccionTiendaVendedorActivity.this, String.valueOf(tiendaHolder0.getNombre()), Toast.LENGTH_SHORT).show();
-
+                                setDatosTiendaLogueada(tiendaHolder0.getNombre());
+                                llamaDatosTiendaActivity();
                             }
                         });
 
@@ -76,12 +80,29 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
         tiendaNueva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EleccionTiendaVendedorActivity.this, DatosTiendaActivity.class);
-                startActivity(intent);
+                llamaDatosTiendaActivity();
+                Container.modoEditar=false;
             }
         });
 
     }
 
+    /**
+     * Setea en container la tiendaLogueada para mostrar los edittexts de DatosTiendaActivity
+     * y activa el modo editar
+     */
+    private void setDatosTiendaLogueada(String nombreTienda){
+        ayudanteBBDD.buscaTiendaSeleccionada(nombreTienda);
+        Container.modoEditar=true;
+    }
 
+    /**
+     * Llama a la actividad DatosTienda para meter una tienda nueva
+     * o editar una tienda existente
+     *
+     */
+    private void llamaDatosTiendaActivity() {
+        Intent intent = new Intent(EleccionTiendaVendedorActivity.this, DatosTiendaActivity.class);
+        startActivity(intent);
+    }
 }

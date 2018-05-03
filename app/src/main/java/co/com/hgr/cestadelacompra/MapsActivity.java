@@ -54,15 +54,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Mapa
     private GoogleMap mMap;
+
     //Marcador posicion actual
     private Marker markerAhora;
     private MarkerOptions markerOptions;
+    private Address direccionAmostrarAdress;
+
     //Utiles para guardar y mostrar la direccion
     private ArrayList<Address>direccionCompleta;
+
     //Latitud y longitud actual
     private LatLng latlongAhora;
+
     //Base de datos
     private DatabaseReference mDatabase;
+
     //Elementos de la vista
     private TextView direccion;
     private EditText buscarDireccion;
@@ -87,9 +93,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //MapFragment mapFragment = (MapFragment) getFragmentManager()
-        //        .findFragmentById(R.id.map);
-        //mapFragment.getMapAsync(this);
        setElementosVista();
 
         startGettingLocations();
@@ -98,9 +101,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         geocoder = new Geocoder(this);
-
-
-
 
     }
 
@@ -156,8 +156,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         mMap.setOnMarkerDragListener(onMarkerDragListener);
-
-
     }
 
 
@@ -168,7 +166,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void guardarLaDireccion(){
 
-        Container.tiendaLogueada.setLocalizacion(direccionCompleta.toString());
+        Container.tiendaLogueada.setLocalizacion(direccionAmostrarAdress.getLatitude() +" -- " + direccionAmostrarAdress.getLongitude());
         Container.tiendaLogueada.setDireccion(direccionAmostrar);
         finish();
     }
@@ -193,8 +191,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-        Address direccionAmostrar = direccionCompleta.get(0);
-        LatLng localizacionAmostrar = new LatLng(direccionAmostrar.getLatitude(), direccionAmostrar.getLongitude());
+        direccionAmostrarAdress = direccionCompleta.get(0);
+        LatLng localizacionAmostrar = new LatLng(direccionAmostrarAdress.getLatitude(), direccionAmostrarAdress.getLongitude());
         markerAhora.remove();
         markerOptions=new MarkerOptions();
         markerOptions.position(localizacionAmostrar);

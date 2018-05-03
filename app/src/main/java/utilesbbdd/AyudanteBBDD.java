@@ -1,11 +1,9 @@
 package utilesbbdd;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,31 +17,31 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.com.hgr.cestadelacompra.DatosCompradorActivity;
-import co.com.hgr.cestadelacompra.VendedorCompradorActivity;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
 
 /**
  * Created by Triboga on 22/4/18.
+ * Clase para el CRUD y demas utiles de la BBDD
  */
 
 public class AyudanteBBDD {
 
+    //Referencia de la bbdd
     private DatabaseReference dbUsuario;
+    //Usuario logueado
     private FirebaseUser usuario;
+    //usuario autenticado
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-
-    private ArrayList<UsuarioPersona> usuarios;
-
+    /**
+     * Constructor
+     */
     public AyudanteBBDD() {
 
         mAuth = FirebaseAuth.getInstance();
         usuario = mAuth.getCurrentUser();
-
-        usuarios = new ArrayList<>();
     }
 
     public void modoPersonas() {
@@ -59,13 +57,76 @@ public class AyudanteBBDD {
         dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda");
     }
 
+    /**
+     * Aniade una tienda en la bbdd bajo un hijo de su dueño por si tiene mas de una tienda
+     *
+     * @param tienda a aniadir en la bbdd
+     */
     public void aniadeUnaTienda(Tienda tienda) {
-        String usuarioSinPuntos = usuario.getEmail().replaceAll("\\.", "_");
-        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(usuarioSinPuntos);
+        dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
 
         dbUsuario.push().setValue(tienda);
     }
 
+    /**
+     * Guarda cambios en la tienda a editar
+     *
+     * @param tiendaAeditar tienda a editar
+     */
+    public void guardacambiosEnTienda(final Tienda tiendaAeditar) {
+        final DatabaseReference dbTienda = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
+
+        dbTienda.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dbTienda.child(Container.keyTiendaAeditar).setValue(tiendaAeditar);
+                Log.d("bucleValue", Container.keyTiendaAeditar + "key tienda---------------------------------------------------");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Buscar la tienda seleccionada a editar
+     * setea en el container la tienda seleccionada
+     *
+     * @param nombreTienda nombre de la tienda a buscar
+     */
+    public void buscaTiendaSeleccionada(final String nombreTienda) {
+        final DatabaseReference dbTienda = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
+
+        dbTienda.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Tienda tienda = postSnapshot.getValue(Tienda.class);
+
+                    if (tienda.getNombre().equals(nombreTienda)) {
+                        Container.tiendaLogueada = tienda;
+                        Container.keyTiendaAeditar = postSnapshot.getKey();
+                        Log.d("bucleValue", "Tienda logueada---------------------------------------------------");
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Comprueba si el usuario esta atutenticado y autorizado y pasa a la siguiente actividad
+     *
+     * @param context contexto
+     * @param intent  intento
+     */
     public void compruebaUsuarioLogueado(final Context context, final Intent intent) {
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -131,7 +192,12 @@ public class AyudanteBBDD {
         return existe[0];
     }
 
-    public ArrayList<Tienda> traerTiendasPropias(){
+    /**
+     * Consulta en bbdd las tienda bajo el child de tu email de usuario logueado
+     *
+     * @return la lista de tiendas bajo el nodo del email del usuario logueado
+     */
+    public ArrayList<Tienda> traerTiendasPropias() {
         final List[] tiendasPropias = new List[]{new ArrayList<>()};
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tienda").child(usuario.getEmail());
@@ -139,11 +205,12 @@ public class AyudanteBBDD {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tienda>> t = new GenericTypeIndicator<List<Tienda>>() {};
+                GenericTypeIndicator<List<Tienda>> t = new GenericTypeIndicator<List<Tienda>>() {
+                };
 
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        tiendasPropias[0] =dataSnapshot.getValue(t);
+                    tiendasPropias[0] = dataSnapshot.getValue(t);
 
                 }
             }
@@ -153,8 +220,6 @@ public class AyudanteBBDD {
 
             }
         });
-
-
 
         return (ArrayList<Tienda>) tiendasPropias[0];
     }

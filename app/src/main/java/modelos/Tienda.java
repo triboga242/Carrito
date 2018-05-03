@@ -4,6 +4,7 @@ import utilesbbdd.Container;
 
 /**
  * Created by Triboga on 22/4/18.
+ * Clase tienda para gestionar los negocios registrados
  */
 
 public class Tienda {
@@ -21,7 +22,7 @@ public class Tienda {
         this.emailDuenio = Container.personaLogueada.getEmail();
         this.nombre = "";
         this.localizacion = "";
-        this.horario = "";
+        this.horario = " -- ";
         this.emailPedidos = "";
         this.telefono = "";
         this.direccion = "";

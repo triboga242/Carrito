@@ -72,10 +72,15 @@ public class DatosTiendaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setTiendaLogueada();
-
                 ayudanteBBDD=new AyudanteBBDD();
                 ayudanteBBDD.modoTiendas();
-                ayudanteBBDD.aniadeUnaTienda(Container.tiendaLogueada);
+
+                if (Container.modoEditar){
+                    ayudanteBBDD.guardacambiosEnTienda(Container.tiendaLogueada);
+
+                }else{
+                    ayudanteBBDD.aniadeUnaTienda(Container.tiendaLogueada);
+                }
 
                 Intent intent = new Intent(DatosTiendaActivity.this, EleccionTiendaVendedorActivity.class);
                 startActivity(intent);
@@ -106,6 +111,7 @@ public class DatosTiendaActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setTextoDireccion();
+        setEditTexts();
     }
 
     private void setTextoDireccion(){

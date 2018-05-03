@@ -55,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Container.personaLogueada.setEmail(user.getEmail());
                     Container.personaLogueada.setNombre(user.getDisplayName());
-                    Container.personaLogueada.setTelefono(user.getPhoneNumber());
+                    //Container.personaLogueada.setTelefono(user.getPhoneNumber());
+                    Container.personaLogueada.setEmailFB(user.getEmail().replaceAll("\\.", "_"));
+
+
 
                     startActivity(intent);
                 }
