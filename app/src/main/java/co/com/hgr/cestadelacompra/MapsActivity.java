@@ -236,11 +236,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setMapToolbarEnabled(true);
 
 
-        // Add a marker in Sydney and move the camera
+      /*  // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().draggable(true).position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
+*/
 
     }
 
@@ -291,7 +291,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         LocationData locationData = new LocationData(location.getLatitude(), location.getLongitude());
-        mDatabase.child("location").child(String.valueOf(new Date().getTime())).setValue(locationData);
+//        mDatabase.child("location").child(String.valueOf(new Date().getTime())).setValue(locationData);
 
         direccion.setText(String.valueOf(location.getLatitude()));
     }
@@ -335,27 +335,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean canAskPermission() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
-
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("GPS desativado!");
-        alertDialog.setMessage("Ativar GPS?");
-        alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        });
-
-        alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        alertDialog.show();
-    }
-
+    
 
     private void startGettingLocations() {
 

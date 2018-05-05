@@ -2,15 +2,12 @@ package co.com.hgr.cestadelacompra;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -99,7 +96,7 @@ public class AccountActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter=
         new FirebaseRecyclerAdapter<UsuarioPersona, UsuarioHolder>(
-                UsuarioPersona.class, R.layout.item_lista, UsuarioHolder.class, dbUsuario){
+                UsuarioPersona.class, R.layout.lista_item, UsuarioHolder.class, dbUsuario){
             @Override
                     public void populateViewHolder(UsuarioHolder usarioHolder0, UsuarioPersona usuario0, int posicion){
                 usarioHolder0.setUsuario(dbUsuario.child("personaUsuario").getKey().toString());

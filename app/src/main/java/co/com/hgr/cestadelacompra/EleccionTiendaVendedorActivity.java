@@ -41,7 +41,7 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
 
         mAdapter =
                 new FirebaseRecyclerAdapter<Tienda, TiendaHolder>(
-                        Tienda.class, R.layout.tienda_lista, TiendaHolder.class, dbUsuario) {
+                        Tienda.class, R.layout.lista_tienda, TiendaHolder.class, dbUsuario) {
                     @Override
                     public void populateViewHolder(final TiendaHolder tiendaHolder0, Tienda tienda0, int posicion) {
                         tiendaHolder0.setNombre(tienda0.getNombre());
@@ -62,8 +62,9 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
                         tiendaHolder0.botonArticulosTienda.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
-
+                                ayudanteBBDD.buscaTiendaSeleccionada(tiendaHolder0.getNombre());
+                                Intent intent = new Intent(EleccionTiendaVendedorActivity.this, ListaCategoriasTiendaActivity.class);
+                                startActivity(intent);
                             }
                         });
                     }

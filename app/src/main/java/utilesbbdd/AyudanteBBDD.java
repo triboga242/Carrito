@@ -127,7 +127,7 @@ public class AyudanteBBDD {
      * @param context contexto
      * @param intent  intento
      */
-    public void compruebaUsuarioLogueado(final Context context, final Intent intent) {
+    public void compruebaUsuarioLogueadoYpasaAotraActividad(final Context context, final Intent intent) {
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -222,5 +222,13 @@ public class AyudanteBBDD {
         });
 
         return (ArrayList<Tienda>) tiendasPropias[0];
+    }
+
+    public void aniadeUnaCategoria(String nombreCategoria){
+
+        DatabaseReference referenceCategoria =
+                FirebaseDatabase.getInstance().getReference("articulo").child(Container.tiendaLogueada.getNombre());
+        referenceCategoria.push().setValue(nombreCategoria);
+
     }
 }

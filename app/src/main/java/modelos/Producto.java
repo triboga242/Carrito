@@ -6,6 +6,7 @@ package modelos;
 
 public class Producto {
 
+    private String categoriaProducto;
     private String nombreProducto;
     private String descripcionProducto;
     private Integer unidadDeVenta;
@@ -13,7 +14,8 @@ public class Producto {
 
     public Producto(){}
 
-    public Producto(String nombreProducto, String descripcionProducto, Integer unidadDeVenta, double precioVenta) {
+    public Producto(String categoriaProducto, String nombreProducto, String descripcionProducto, Integer unidadDeVenta, double precioVenta) {
+        this.categoriaProducto=categoriaProducto;
         this.nombreProducto = nombreProducto;
         this.descripcionProducto = descripcionProducto;
         this.unidadDeVenta = unidadDeVenta;
@@ -50,6 +52,14 @@ public class Producto {
 
     public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
+    }
+
+    public String getCategoriaProducto() {
+        return categoriaProducto;
+    }
+
+    public void setCategoriaProducto(String categoriaProducto) {
+        this.categoriaProducto = categoriaProducto;
     }
 
     @Override

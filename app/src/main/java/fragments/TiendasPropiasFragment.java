@@ -3,7 +3,6 @@ package fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class TiendasPropiasFragment extends android.support.v4.app.ListFragment 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ArrayAdapter <String> adapter = new ArrayAdapter(getActivity(),
-                R.layout.tienda_lista, R.id.nombre, tiendasPropiasString);
+                R.layout.lista_tienda, R.id.nombre, tiendasPropiasString);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
     }

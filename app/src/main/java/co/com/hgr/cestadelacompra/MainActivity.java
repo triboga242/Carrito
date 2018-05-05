@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if (firebaseAuth.getCurrentUser()!=null){
-                    Toast.makeText(getApplicationContext(), "usuario "+user.getPhotoUrl(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "usuario "+user.getEmail(),Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(MainActivity.this, DatosCompradorActivity.class);
 

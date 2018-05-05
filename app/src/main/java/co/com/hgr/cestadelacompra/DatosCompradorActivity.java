@@ -1,20 +1,17 @@
 package co.com.hgr.cestadelacompra;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import modelos.UsuarioPersona;
 import utilesbbdd.AyudanteBBDD;
-import utilesbbdd.Container;
 
 /**
  * TODO Creo que voy a obviar esta parte, ya que con el logeo de Google tengo el nombre, tlfn y email.
@@ -72,7 +69,7 @@ public class DatosCompradorActivity extends AppCompatActivity {
         super.onStart();
 
         if (ayudanteBBDD.compruebaUsuarioRegistrado()) {
-            ayudanteBBDD.compruebaUsuarioLogueado(this,
+            ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
                     new Intent(DatosCompradorActivity.this,
                             VendedorCompradorActivity.class));
         } else {
@@ -82,7 +79,7 @@ public class DatosCompradorActivity extends AppCompatActivity {
                     usuario.getEmail(),
                     usuario.getPhoneNumber());
             ayudanteBBDD.aniadeUnaPersona(persona);
-            ayudanteBBDD.compruebaUsuarioLogueado(this,
+            ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
                     new Intent(DatosCompradorActivity.this,
                             VendedorCompradorActivity.class));
         }
