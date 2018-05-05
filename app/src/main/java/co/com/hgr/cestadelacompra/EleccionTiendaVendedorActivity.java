@@ -49,32 +49,16 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
                         tiendaHolder0.setDireccion(tienda0.getDireccion());
                         tiendaHolder0.setBotonEditar();
                         tiendaHolder0.setBotonArticulosTienda();
-
-                        tiendaHolder0.botonEditarTienda.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(EleccionTiendaVendedorActivity.this, String.valueOf(tiendaHolder0.getNombre()), Toast.LENGTH_SHORT).show();
-                                setDatosTiendaLogueada(tiendaHolder0.getNombre());
-                                llamaDatosTiendaActivity();
-                            }
-                        });
-
-                        tiendaHolder0.botonArticulosTienda.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ayudanteBBDD.buscaTiendaSeleccionada(tiendaHolder0.getNombre());
-                                Intent intent = new Intent(EleccionTiendaVendedorActivity.this, ListaCategoriasTiendaActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+                        tiendaHolder0.setBotonPedidosTienda();
+                        tiendaHolder0.setBotonBorrarTienda();
                     }
-
-
                 };
         recyclerView.setAdapter(mAdapter);
     }
 
-
+    /**
+     * Asigna el boton tienda nueva y su listener que llama a la actividad tienda nueva
+     */
     public void botonTiendaNueva() {
 
         tiendaNueva = (Button) findViewById(R.id.tienda_nueva);
@@ -86,15 +70,6 @@ public class EleccionTiendaVendedorActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    /**
-     * Setea en container la tiendaLogueada para mostrar los edittexts de DatosTiendaActivity
-     * y activa el modo editar
-     */
-    private void setDatosTiendaLogueada(String nombreTienda){
-        ayudanteBBDD.buscaTiendaSeleccionada(nombreTienda);
-        Container.modoEditar=true;
     }
 
     /**

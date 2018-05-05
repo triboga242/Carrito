@@ -54,7 +54,7 @@ public class ListaCategoriasTiendaActivity extends AppCompatActivity {
 
                 categoriaVendedorHolder.setBorrarCategoria();
                 categoriaVendedorHolder.setEditarCategoria();
-                categoriaVendedorHolder.setArticulosCategoria();
+                categoriaVendedorHolder.setArticulosCategoria(categoriaVendedorHolder.getNombreCategoria().toString());
 
             }
         };

@@ -48,6 +48,10 @@ public class AyudanteBBDD {
         dbUsuario = FirebaseDatabase.getInstance().getReference().child("personaUsuario");
     }
 
+    /**
+     *
+     * @param usuarioPersona
+     */
     public void aniadeUnaPersona(UsuarioPersona usuarioPersona) {
         dbUsuario = FirebaseDatabase.getInstance().getReference().child("personaUsuario").child(usuario.getPhoneNumber());
         dbUsuario.push().setValue(usuarioPersona);
@@ -146,6 +150,12 @@ public class AyudanteBBDD {
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+
+    /**
+     * Comprueba si el usuario esta logueado y autorizado
+     *
+     * @return true si esta autorizado, false si no lo esta
+     */
     public Boolean compruebaUsuarioRegistrado() {
 
         final Boolean[] existe = {false};
@@ -169,28 +179,6 @@ public class AyudanteBBDD {
         return existe[0];
     }
 
-    public Boolean compruebaTiendaRegistrada() {
-
-        final Boolean[] existe = {false};
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("tienda").child(usuario.getEmail());
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot == null) {
-                    existe[0] = false;
-                } else {
-                    existe[0] = true;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return existe[0];
-    }
 
     /**
      * Consulta en bbdd las tienda bajo el child de tu email de usuario logueado
@@ -224,6 +212,11 @@ public class AyudanteBBDD {
         return (ArrayList<Tienda>) tiendasPropias[0];
     }
 
+
+    /**
+     * Aniade una categoria en la bbdd a la lista de categorias de la tienda seleccionada
+     * @param nombreCategoria el nombre de la categoria a crear
+     */
     public void aniadeUnaCategoria(String nombreCategoria){
 
         DatabaseReference referenceCategoria =

@@ -17,4 +17,6 @@ public class Container {
     public static Boolean modoEditar = false;
     //Key de la tienda a editar
     public static String keyTiendaAeditar ="";
+    //Categoria del producto a guardar
+    public static String categoriaProductoAGuardar="";
 }

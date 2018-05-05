@@ -6,7 +6,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ConcurrentModificationException;
+
 import co.com.hgr.cestadelacompra.R;
+import utilesbbdd.Container;
 
 /**
  * Created by Triboga on 5/5/18.
@@ -55,9 +58,18 @@ public class CategoriaVendedorHolder extends RecyclerView.ViewHolder {
         this.borrarCategoria = (Button) view.findViewById(R.id.btnBorrarCategoria);
 
     }
-    public void setArticulosCategoria() {
+    public void setArticulosCategoria(final String categoriaSeleccionada) {
 
         this.articulosCategoria = (Button) view.findViewById(R.id.btnArticulosCategoria);
+
+        articulosCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Container.categoriaProductoAGuardar=categoriaSeleccionada;
+
+            }
+        });
+
 
     }
 }
