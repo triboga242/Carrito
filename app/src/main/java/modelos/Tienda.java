@@ -11,7 +11,8 @@ public class Tienda {
 
     private String emailDuenio;
     private String nombre;
-    private String localizacion;
+    private String latitud;
+    private String longitud;
     private String horario;
     private String emailPedidos;
     private String telefono;
@@ -21,22 +22,41 @@ public class Tienda {
 
         this.emailDuenio = Container.personaLogueada.getEmail();
         this.nombre = "";
-        this.localizacion = "";
         this.horario = " -- ";
         this.emailPedidos = "";
         this.telefono = "";
         this.direccion = "";
+        this.latitud = "";
+        this.longitud = "";
     }
 
 
-    public Tienda(String emailDuenio, String nombre, String localizacion, String horario, String emailPedidos, String telefono, String direccion) {
+    public Tienda(String emailDuenio, String nombre, String localizacion, String latitud, String longitud, String horario, String emailPedidos, String telefono, String direccion) {
         this.emailDuenio = emailDuenio;
         this.nombre = nombre;
-        this.localizacion = localizacion;
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.horario = horario;
         this.emailPedidos = emailPedidos;
         this.telefono = telefono;
         this.direccion = direccion;
+    }
+
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 
     public String getEmailDuenio() {
@@ -55,13 +75,6 @@ public class Tienda {
         this.nombre = nombre;
     }
 
-    public String getLocalizacion() {
-        return localizacion;
-    }
-
-    public void setLocalizacion(String localizacion) {
-        this.localizacion = localizacion;
-    }
 
     public String getHorario() {
         return horario;

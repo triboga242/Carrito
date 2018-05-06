@@ -1,18 +1,13 @@
 package co.com.hgr.cestadelacompra;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -24,8 +19,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -49,7 +42,7 @@ import java.util.Map;
 import modelos.LocationData;
 import utilesbbdd.Container;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapsActivityTiendasExistentes extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, LocationListener {
 
     //Mapa
@@ -61,8 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Address direccionAmostrarAdress;
 
     //Utiles para guardar y mostrar la direccion
-    private ArrayList<Address>direccionCompleta;
-    private LocationData locationBBDD;
+    private ArrayList<Address> direccionCompleta;
 
     //Latitud y longitud actual
     private LatLng latlongAhora;
@@ -88,13 +80,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**
+         * Cambiar el layout o al menos los listeners
+         */
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-       setElementosVista();
+        setElementosVista();
 
         startGettingLocations();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -129,49 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        /**
-         * TODO hacer guardarLaDireccion(){}
-         */
-        btnGuardarDireccion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                guardarLaDireccion();
-            }
-        });
 
-        onMarkerDragListener = new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-                direccion.setText(String.valueOf(markerAhora.getPosition()));
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                setTextoDireccion();
-            }
-        };
-
-        mMap.setOnMarkerDragListener(onMarkerDragListener);
-    }
-
-
-    /**
-     * Guarda la direccion selecionada en la bbdd
-     * TODO que vaya a la actividad de guadar la tienda (Acividad anterior)
-     *
-     */
-    private void guardarLaDireccion(){
-
-        Container.tiendaLogueada.setLatitud(String.valueOf(direccionAmostrarAdress.getLatitude()));
-        Container.tiendaLogueada.setLongitud(String.valueOf(direccionAmostrarAdress.getLongitude()));
-        Container.tiendaLogueada.setDireccion(direccionAmostrar);
-
-        finish();
     }
 
     /**
@@ -238,41 +192,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setZoomControlsEnabled(true);
         uiSettings.setMapToolbarEnabled(true);
 
-
-      /*  // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().draggable(true).position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-*/
-
     }
 
-    /**
-     * Pone la direccion en el textview
-     */
-    public void setTextoDireccion(){
-
-        ArrayList<Address>direccionCompleta=null;
-        try {
-
-            direccionCompleta= (ArrayList<Address>) geocoder.getFromLocation(
-                            markerAhora.getPosition().latitude,
-                            markerAhora.getPosition().longitude,
-                            1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        direccionAmostrar=" 0 " + direccionCompleta.get(0).getAddressLine(0);
-        direccionAmostrar+= " 1 " + direccionCompleta.get(0).getAddressLine(1);
-        direccionAmostrar+=" 2 " + direccionCompleta.get(0).getAddressLine(2);
-
-        direccion.setText(String.valueOf(direccionAmostrar));
-
-        //locationBBDD=new LocationData(direccionCompleta.get(0).getLatitude(), direccionCompleta.get(0).getLongitude());
-
-    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -282,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
 
-
+/*
         if (markerAhora != null) {
             markerAhora.remove();
         }
@@ -296,10 +217,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CameraPosition cameraPosition = new CameraPosition.Builder().zoom(15).target(latlongAhora).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-       // LocationData locationData = new LocationData(location.getLatitude(), location.getLongitude());
-//        mDatabase.child("location").child(String.valueOf(new Date().getTime())).setValue(locationData);
-
         direccion.setText(String.valueOf(location.getLatitude()));
+        */
     }
 
     @Override
@@ -341,7 +260,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean canAskPermission() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
-    
+
 
     private void startGettingLocations() {
 
@@ -382,7 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
 
-            Toast.makeText(this, "Permissão negada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -404,7 +323,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         } else {
-            Toast.makeText(this, "Não é possível obter a localização", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No es posible obtener la localizacion", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -417,7 +336,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //Get map of users in datasnapshot
                         if (dataSnapshot.getValue() != null) {
                         }
-                        //getAllLocations((Map<String,Object>) dataSnapshot.getValue());
+                        getAllLocations((Map<String,Object>) dataSnapshot.getValue());
                     }
 
                     @Override
@@ -429,24 +348,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void getAllLocations(Map<String, Object> locations) {
 
-
         for (Map.Entry<String, Object> entry : locations.entrySet()) {
-
-            Date newDate = new Date(Long.valueOf(entry.getKey()));
             Map singleLocation = (Map) entry.getValue();
-            LatLng latLng = new LatLng((Double) singleLocation.get("latitude"), (Double) singleLocation.get("longitude"));
-            addGreenMarker(newDate, latLng);
-
+            LatLng latLng = new LatLng((Double) singleLocation.get("latitud"), (Double) singleLocation.get("longitud"));
+            addGreenMarker(singleLocation.get("nombreTienda").toString(), latLng);
         }
-
-
     }
 
-    private void addGreenMarker(Date newDate, LatLng latLng) {
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private void addGreenMarker(String newDate, LatLng latLng) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title(dt.format(newDate));
+        markerOptions.title(newDate);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.addMarker(markerOptions);
     }

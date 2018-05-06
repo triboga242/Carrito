@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelos.LocationData;
 import modelos.Producto;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
@@ -69,7 +70,11 @@ public class AyudanteBBDD {
      */
     public void aniadeUnaTienda(Tienda tienda) {
         dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
+        DatabaseReference dbLocalizacion= FirebaseDatabase.getInstance().getReference().child("location");
 
+        LocationData locationData = new LocationData(Double.parseDouble(tienda.getLatitud()),Double.parseDouble(tienda.getLongitud()), tienda.getNombre());
+
+        dbLocalizacion.push().setValue(locationData);
         dbUsuario.push().setValue(tienda);
     }
 
@@ -259,6 +264,10 @@ public class AyudanteBBDD {
         });
     }
 
+    /**
+     * Aniade un producto a la bbdd bajo la categoria y tienda seleccionada
+     * @param producto a guardar
+     */
     public void aniadeUnProducto(Producto producto) {
         final DatabaseReference dbProducto = FirebaseDatabase.getInstance().getReference()
                 .child("articulo")

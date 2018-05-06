@@ -36,5 +36,13 @@ public class VendedorCompradorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnComprador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VendedorCompradorActivity.this, MapsActivityTiendasExistentes.class);
+                startActivity(intent);
+            }
+        });
     }
 }

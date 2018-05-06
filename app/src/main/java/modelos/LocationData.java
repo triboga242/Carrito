@@ -6,12 +6,14 @@ package modelos;
 
 public class LocationData {
 
+    String nombreTienda;
     double longitud;
     double latitud;
 
-    public LocationData(double longitud, double latitud) {
+    public LocationData(double latitud, double longitud, String nombreTienda) {
         this.longitud = longitud;
         this.latitud = latitud;
+        this.nombreTienda=nombreTienda;
     }
 
     public double getLongitud() {
@@ -28,5 +30,13 @@ public class LocationData {
 
     public void setLatitud(double latitud) {
         this.latitud = latitud;
+    }
+
+    public String getNombreTienda() {
+        return nombreTienda;
+    }
+
+    public void setNombreTienda(String nombreTienda) {
+        this.nombreTienda = nombreTienda;
     }
 }
