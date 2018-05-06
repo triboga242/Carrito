@@ -10,7 +10,9 @@ public class Producto {
     private String nombreProducto;
     private String descripcionProducto;
     private Integer unidadDeVenta;
+    private String medidaDeVenta;
     private double precioVenta;
+    private boolean disponible;
 
     public Producto(){}
 
@@ -54,6 +56,14 @@ public class Producto {
         this.precioVenta = precioVenta;
     }
 
+    public String getMedidaDeVenta() {
+        return medidaDeVenta;
+    }
+
+    public void setMedidaDeVenta(String medidaDeVenta) {
+        this.medidaDeVenta = medidaDeVenta;
+    }
+
     public String getCategoriaProducto() {
         return categoriaProducto;
     }
@@ -62,13 +72,24 @@ public class Producto {
         this.categoriaProducto = categoriaProducto;
     }
 
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
     @Override
     public String toString() {
         return "Producto{" +
-                "nombreProducto='" + nombreProducto + '\'' +
+                "categoriaProducto='" + categoriaProducto + '\'' +
+                ", nombreProducto='" + nombreProducto + '\'' +
                 ", descripcionProducto='" + descripcionProducto + '\'' +
                 ", unidadDeVenta=" + unidadDeVenta +
+                ", medidaDeVenta='" + medidaDeVenta + '\'' +
                 ", precioVenta=" + precioVenta +
+                ", disponible=" + disponible +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package co.com.hgr.cestadelacompra;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,8 @@ public class ListaAritculosTiendaActivity extends AppCompatActivity {
         crearNuevoArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(view.getContext(), DatosProductoActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -73,7 +75,7 @@ public class ListaAritculosTiendaActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference("articulo").child(
                         Container.tiendaLogueada.getNombre()).child(Container.categoriaProductoAGuardar);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_categorias_tienda);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_articulos_tienda);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

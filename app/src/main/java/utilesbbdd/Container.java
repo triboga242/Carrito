@@ -19,4 +19,6 @@ public class Container {
     public static String keyTiendaAeditar ="";
     //Categoria del producto a guardar
     public static String categoriaProductoAGuardar="";
+    //Key categoria seleccionada
+    public static String keyCategoriaSeleccionada;
 }

@@ -1,5 +1,6 @@
 package holders;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +9,11 @@ import android.widget.TextView;
 
 import java.util.ConcurrentModificationException;
 
+import co.com.hgr.cestadelacompra.DatosProductoActivity;
+import co.com.hgr.cestadelacompra.ListaAritculosTiendaActivity;
+import co.com.hgr.cestadelacompra.ListaCategoriasTiendaActivity;
 import co.com.hgr.cestadelacompra.R;
+import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
 
 /**
@@ -24,12 +29,15 @@ public class CategoriaVendedorHolder extends RecyclerView.ViewHolder {
     private Button editarCategoria;
     private Button borrarCategoria;
     private Button articulosCategoria;
+    //Elementos para la BBDD
+    AyudanteBBDD ayudanteBBDD;
 
 
 
     public CategoriaVendedorHolder(View view) {
         super(view);
         this.view=view;
+        ayudanteBBDD=new AyudanteBBDD();
     }
 
     public TextView getNombreCategoria() {
@@ -66,7 +74,9 @@ public class CategoriaVendedorHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 Container.categoriaProductoAGuardar=categoriaSeleccionada;
-
+                ayudanteBBDD.buscaCategoriaSeleccionada(categoriaSeleccionada);
+                Intent intent = new Intent(view.getContext(), ListaAritculosTiendaActivity.class);
+                view.getContext().startActivity(intent);
             }
         });
 

@@ -31,7 +31,7 @@ public class ListaCategoriasTiendaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_categorias_tienda);
-        findElementosVista();
+       findElementosVista();
         setListenerBotonGuardar();
         setRecyclerAdapter();
         ayudanteBBDD = new AyudanteBBDD();
@@ -39,14 +39,14 @@ public class ListaCategoriasTiendaActivity extends AppCompatActivity {
 
     private void setRecyclerAdapter() {
         dbUsuario =
-                FirebaseDatabase.getInstance().getReference("articulo").child(
+                FirebaseDatabase.getInstance().getReference("categoria").child(
                         Container.tiendaLogueada.getNombre());
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_categorias_tienda);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new FirebaseRecyclerAdapter<String, CategoriaVendedorHolder>(
+       mAdapter = new FirebaseRecyclerAdapter<String, CategoriaVendedorHolder>(
                 String.class, R.layout.lista_categoria_vendedor, CategoriaVendedorHolder.class, dbUsuario) {
             @Override
             public void populateViewHolder(final CategoriaVendedorHolder categoriaVendedorHolder, String string, int posicion) {
@@ -54,7 +54,7 @@ public class ListaCategoriasTiendaActivity extends AppCompatActivity {
 
                 categoriaVendedorHolder.setBorrarCategoria();
                 categoriaVendedorHolder.setEditarCategoria();
-                categoriaVendedorHolder.setArticulosCategoria(categoriaVendedorHolder.getNombreCategoria().toString());
+                categoriaVendedorHolder.setArticulosCategoria(string);
 
             }
         };

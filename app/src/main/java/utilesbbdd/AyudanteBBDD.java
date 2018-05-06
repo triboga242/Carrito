@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelos.Producto;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
 
@@ -125,6 +126,7 @@ public class AyudanteBBDD {
         });
     }
 
+
     /**
      * Comprueba si el usuario esta atutenticado y autorizado y pasa a la siguiente actividad
      *
@@ -220,8 +222,51 @@ public class AyudanteBBDD {
     public void aniadeUnaCategoria(String nombreCategoria){
 
         DatabaseReference referenceCategoria =
-                FirebaseDatabase.getInstance().getReference("articulo").child(Container.tiendaLogueada.getNombre());
+                FirebaseDatabase.getInstance().getReference("categoria").child(Container.tiendaLogueada.getNombre());
         referenceCategoria.push().setValue(nombreCategoria);
+
+    }
+
+
+    /**
+     * Buscar la Categoria seleccionada a editar
+     * setea en el container la categoria seleccionada
+     *
+     * @param nombreCategoria nombre de la categoria a buscar
+     */
+    public void buscaCategoriaSeleccionada(final String nombreCategoria) {
+        final DatabaseReference dbProducto = FirebaseDatabase.getInstance().getReference().child("categoria")
+                .child(Container.tiendaLogueada.getNombre())
+                ;
+
+        dbProducto.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    String categoria = postSnapshot.getValue(String.class);
+
+                    if (categoria.equals(nombreCategoria)) {
+                        Container.keyCategoriaSeleccionada = postSnapshot.getKey();
+                        Log.d("bucleValue", "Categoria seleccionada---------------------------------------------------");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void aniadeUnProducto(Producto producto) {
+        final DatabaseReference dbProducto = FirebaseDatabase.getInstance().getReference()
+                .child("articulo")
+                .child(Container.tiendaLogueada.getNombre())
+                .child(Container.categoriaProductoAGuardar);
+
+        dbProducto.push().setValue(producto);
+
 
     }
 }
