@@ -24,7 +24,7 @@ import modelos.UsuarioPersona;
 
 /**
  * Created by Triboga on 22/4/18.
- * Clase para el CRUD y demas utiles de la BBDD
+ * Clase para los CRUD y demas utiles de la BBDD
  */
 
 public class AyudanteBBDD {
@@ -72,7 +72,7 @@ public class AyudanteBBDD {
         dbUsuario = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
         DatabaseReference dbLocalizacion= FirebaseDatabase.getInstance().getReference().child("location");
 
-        LocationData locationData = new LocationData(Double.parseDouble(tienda.getLatitud()),Double.parseDouble(tienda.getLongitud()), tienda.getNombre());
+        LocationData locationData = new LocationData(Double.parseDouble(tienda.getLatitud()),Double.parseDouble(tienda.getLongitud()), tienda.getNombre(), tienda.getEmailDuenio());
 
         dbLocalizacion.push().setValue(locationData);
         dbUsuario.push().setValue(tienda);

@@ -82,7 +82,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
         super.onCreate(savedInstanceState);
 
         /**
-         * Cambiar el layout o al menos los listeners
+         *TODO  Cambiar el layout o al menos los listeners
          */
         setContentView(R.layout.activity_maps);
 
@@ -185,6 +185,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
 
 
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(this);
 
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setAllGesturesEnabled(true);
@@ -197,6 +198,8 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(this, marker.getTitle().toString(), Toast.LENGTH_SHORT).show();
+
         return false;
     }
 
@@ -360,6 +363,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
         markerOptions.position(latLng);
         markerOptions.title(newDate);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
         mMap.addMarker(markerOptions);
     }
 
