@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import co.com.hgr.cestadelacompra.ListaAritculosTiendaActivity;
+import co.com.hgr.cestadelacompra.ListaArticulosCompradorActivity;
 import co.com.hgr.cestadelacompra.R;
 import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
@@ -70,7 +71,7 @@ public class CategoriaCompradrorHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 Container.categoriaProductoAGuardar=categoriaSeleccionada;
                 ayudanteBBDD.buscaCategoriaSeleccionada(categoriaSeleccionada);
-                Intent intent = new Intent(view.getContext(), ListaAritculosTiendaActivity.class);
+                Intent intent = new Intent(view.getContext(), ListaArticulosCompradorActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
