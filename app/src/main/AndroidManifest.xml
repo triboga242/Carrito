@@ -58,6 +58,7 @@
         <activity android:name=".EleccionTiendaVendedorActivity" />
         <activity android:name=".ListaAritculosTiendaActivity" />
         <activity android:name=".ListaCategoriasTiendaActivity" />
+        <activity android:name=".ListaCategoriasClienteActivity" />
         <activity android:name=".DatosProductoActivity" />
         <activity
             android:name=".MapsActivityTiendasExistentes"

@@ -1,6 +1,7 @@
 package co.com.hgr.cestadelacompra;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -40,6 +41,7 @@ import java.util.Date;
 import java.util.Map;
 
 import modelos.LocationData;
+import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
 
 public class MapsActivityTiendasExistentes extends FragmentActivity implements OnMapReadyCallback,
@@ -61,6 +63,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
 
     //Base de datos
     private DatabaseReference mDatabase;
+    private AyudanteBBDD ayudanteBBDD;
 
     //Elementos de la vista
     private TextView direccion;
@@ -91,7 +94,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setElementosVista();
-
+        ayudanteBBDD = new AyudanteBBDD();
         startGettingLocations();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         getMarkers();
@@ -125,7 +128,14 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
             }
         });
 
-
+        btnGuardarDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ayudanteBBDD.buscaTiendaSeleccionada(Container.tiendaLogueada.getNombre());
+                Intent intent=new Intent(MapsActivityTiendasExistentes.this, ListaCategoriasClienteActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -199,7 +209,7 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
     @Override
     public boolean onMarkerClick(Marker marker) {
         Toast.makeText(this, marker.getTitle().toString(), Toast.LENGTH_SHORT).show();
-
+        Container.tiendaLogueada.setNombre(marker.getTitle().toString());
         return false;
     }
 
