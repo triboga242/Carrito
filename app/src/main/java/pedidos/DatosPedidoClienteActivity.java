@@ -1,65 +1,105 @@
-package co.com.hgr.cestadelacompra;
+package pedidos;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import co.com.hgr.cestadelacompra.ListaCategoriasClienteActivity;
+import co.com.hgr.cestadelacompra.MapsActivityTiendasExistentes;
+import co.com.hgr.cestadelacompra.R;
 import holders.ProductoCompradorHolder;
-import holders.ProductoHolder;
 import modelos.Producto;
-import pedidos.DatosPedidoClienteActivity;
 import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
 
-/**
- * Created by Triboga on 7/5/18.
- */
+public class DatosPedidoClienteActivity extends AppCompatActivity {
 
-public class ListaArticulosCompradorActivity extends AppCompatActivity {
 
     //Elementos de la vista
-    private Button btnDatosPedido;
+    private TextView tvNombreTienda;
+    private TextView tvDireccionTienda;
+    private TextView tvPrecioTotalPedido;
+
+    private Button btnGuardarPedido;
+    private Button btnReiniciaPedido;
+    private Button btnAniadeArticuloAPedido;
+
+    private ListView listaArticulosEnCesta;
+
 
     //Elementos de la bbdd
     private AyudanteBBDD ayudanteBBDD;
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference dbArticulo;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_aritculos_tienda);
+        setContentView(R.layout.activity_datos_pedido_cliente);
         ayudanteBBDD = new AyudanteBBDD();
         findElementosVista();
         setReciclerView();
-
+        setListenersBotones();
+        setDatosTienda();
     }
 
     /**
      * Asigna elementos de la vista:
-     *      Boton crearNuevoArticulo
+     *     TextView tvNombreTienda
+     *     TextView tvDireccionTienda
+     *     TextView tvPrecioTotalPedido
+     *     Boton btnAniadeArticuloAPedido
+     *     Boton btnReiniciaPedido
+     *     Boton btnGuardarPedido
+     *
      */
     private void findElementosVista(){
-        btnDatosPedido=(Button)findViewById(R.id.btn_nuevo_articulo_tienda);
-        btnDatosPedido.setOnClickListener(new View.OnClickListener() {
+
+        tvNombreTienda=(TextView)findViewById(R.id.tv_nombre_tienda);
+        tvDireccionTienda=(TextView)findViewById(R.id.tv_direccion_tienda);
+        tvPrecioTotalPedido=(TextView)findViewById(R.id.tv_precio_total_pedido);
+
+        btnAniadeArticuloAPedido=(Button)findViewById(R.id.btnAniadirProducto);
+        btnReiniciaPedido =(Button)findViewById(R.id.btnReiniciarPedido);
+        btnGuardarPedido=(Button)findViewById(R.id.bntConfirmarPedido);
+
+        listaArticulosEnCesta=(ListView)findViewById(R.id.lista_productos_pedido);
+    }
+
+    /**
+     * Pone texto a los Textview de los datos de la tienda
+     */
+    private void setDatosTienda(){
+        ayudanteBBDD.buscaTiendaSeleccionada(Container.tiendaLogueada.getNombre());
+
+        tvNombreTienda.setText(Container.tiendaLogueada.getNombre());
+        tvDireccionTienda.setText(Container.tiendaLogueada.getDireccion());
+    }
+
+
+    /**
+     * Crea y asigna los listener de los botones
+     */
+    private void setListenersBotones(){
+        btnAniadeArticuloAPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ListaArticulosCompradorActivity.this, DatosPedidoClienteActivity.class);
+                Intent intent=new Intent(DatosPedidoClienteActivity.this, ListaCategoriasClienteActivity.class);
                 startActivity(intent);
             }
         });
     }
-
 
     /**
      * Lanza la lista de los articulos y asigna sus elementos
@@ -68,8 +108,8 @@ public class ListaArticulosCompradorActivity extends AppCompatActivity {
         dbArticulo =
                 FirebaseDatabase.getInstance().getReference("articulo").child(
                         Container.tiendaLogueada.getNombre()).child(Container.categoriaProductoAGuardar);
-
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_articulos_tienda);
+/*
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lista_productos_pedido);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -83,12 +123,18 @@ public class ListaArticulosCompradorActivity extends AppCompatActivity {
                         producto.getPrecioVenta() + " x " + producto.getUnidadDeVenta()
                 );
                 productoHolder.setBotonBorrarArticulo();
-                productoHolder.setBotonEditarArticulo(ListaArticulosCompradorActivity.this);
+                productoHolder.setBotonEditarArticulo(DatosPedidoClienteActivity.this);
                 productoHolder.setBotonProductoAgotado();
             }
         };
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+   */
+
+        listaArticulosEnCesta.setAdapter(new AdaptadorListaArticulosEnLaCesta(this));
+
+
+
 
     }
 }

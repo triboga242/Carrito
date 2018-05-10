@@ -28,6 +28,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +43,7 @@ import java.util.Date;
 import java.util.Map;
 
 import modelos.LocationData;
+import pedidos.DatosPedidoClienteActivity;
 import utilesbbdd.AyudanteBBDD;
 import utilesbbdd.Container;
 
@@ -64,6 +67,10 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
     //Base de datos
     private DatabaseReference mDatabase;
     private AyudanteBBDD ayudanteBBDD;
+
+    //Autenticaion de usuario
+    private FirebaseAuth mAuth;
+    private FirebaseUser usuario;
 
     //Elementos de la vista
     private TextView direccion;
@@ -98,7 +105,8 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
         startGettingLocations();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         getMarkers();
-
+        mAuth = FirebaseAuth.getInstance();
+        usuario=mAuth.getCurrentUser();
 
         geocoder = new Geocoder(this);
 
@@ -132,7 +140,10 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
             @Override
             public void onClick(View view) {
                 ayudanteBBDD.buscaTiendaSeleccionada(Container.tiendaLogueada.getNombre());
-                Intent intent=new Intent(MapsActivityTiendasExistentes.this, ListaCategoriasClienteActivity.class);
+                Container.pedidoEnCurso.setPedidoDe(usuario.getEmail());
+                Container.pedidoEnCurso.setPedidoA(Container.tiendaLogueada.getEmailPedidos());
+
+                Intent intent=new Intent(MapsActivityTiendasExistentes.this, DatosPedidoClienteActivity.class);
                 startActivity(intent);
             }
         });

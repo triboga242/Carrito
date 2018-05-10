@@ -63,7 +63,9 @@
         <activity android:name=".DatosProductoActivity" />
         <activity
             android:name=".MapsActivityTiendasExistentes"
-            android:label="@string/title_activity_maps_tiendas_existentes"></activity>
+            android:label="@string/title_activity_maps_tiendas_existentes" />
+        <activity android:name="pedidos.ListaPedidosPendientesVendedorActivity" />
+        <activity android:name="pedidos.DatosPedidoClienteActivity"></activity>
     </application>
 
 </manifest>

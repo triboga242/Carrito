@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.com.hgr.cestadelacompra.ListaArticulosCompradorActivity;
+import modelos.Categoria;
+import modelos.Item;
 import modelos.LocationData;
 import modelos.Producto;
 import modelos.Tienda;
@@ -107,7 +111,9 @@ public class AyudanteBBDD {
      * @param nombreTienda nombre de la tienda a buscar
      */
     public void buscaTiendaSeleccionada(final String nombreTienda) {
-        final DatabaseReference dbTienda = FirebaseDatabase.getInstance().getReference().child("tienda").child(Container.personaLogueada.getEmailFB());
+        final DatabaseReference dbTienda = FirebaseDatabase.getInstance().getReference()
+                .child("tienda")
+                .child(Container.personaLogueada.getEmailFB());
 
         dbTienda.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -118,7 +124,7 @@ public class AyudanteBBDD {
                     if (tienda.getNombre().equals(nombreTienda)) {
                         Container.tiendaLogueada = tienda;
                         Container.keyTiendaAeditar = postSnapshot.getKey();
-                        Log.d("bucleValue", "Tienda logueada---------------------------------------------------");
+                        Log.d("bucleValue", "Tienda logueada---------------------------------------------------" + Container.tiendaLogueada.toString());
 
                     }
                 }
@@ -275,6 +281,80 @@ public class AyudanteBBDD {
                 .child(Container.categoriaProductoAGuardar);
 
         dbProducto.push().setValue(producto);
+
+        final DatabaseReference dbProductoRaw = FirebaseDatabase.getInstance().getReference()
+                .child("articuloraw")
+                .child(Container.tiendaLogueada.getNombre());
+        dbProductoRaw.push().setValue(producto);
+
+    }
+
+
+    /**
+     * Aniade al pedido en curso el producto seleccionado en BBDD
+     *
+     * @param producto  producto
+     */
+    public void aniadeUnProductoAPedidoEnCurso(Producto producto, Context context) {
+
+        buscaProductoSeleccionadoYaniade(producto, context);
+
+    }
+
+    /**
+     *Busca el producto seleccionado en BBDD
+     *
+     *
+     */
+    public void buscaProductoSeleccionadoYaniade(final Producto productoABuscar, final Context context) {
+
+        final DatabaseReference dbProductoRaw = FirebaseDatabase.getInstance().getReference()
+                .child("articuloraw")
+                .child(Container.tiendaLogueada.getNombre())
+                ;
+
+        dbProductoRaw.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean existe=false;
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Producto producto = postSnapshot.getValue(Producto.class);
+                    if (producto.getNombreProducto().equals(productoABuscar.getNombreProducto())
+                            && producto.getDescripcionProducto().equals(productoABuscar.getDescripcionProducto())) {
+                        Log.d("bucleValue", "Producto seleccionado---------------------------------------------------" + producto.toString());
+                        for (Item item : Container.pedidoEnCurso.getItems()) {
+                            if (item.getProducto().getNombreProducto().equals(productoABuscar.getNombreProducto())
+                                    && item.getProducto().getDescripcionProducto().equals(productoABuscar.getDescripcionProducto())) {
+                                existe = true;
+                                item.setCantidad(item.getCantidad() + 1);
+                                Log.d("bucleValue", "Cantidad aumentada" +
+                                        "---------------------------------------------------" + item.toString());
+                                Toast.makeText(context, "Aumentado" + item.toString(), Toast.LENGTH_SHORT ).show();
+                            }
+                        }
+                    }
+                }
+                if (!existe){
+                    Container.pedidoEnCurso.getItems().add(new Item(1, productoABuscar));
+                    Log.d("bucleValue", "Producto aniadido a pedido en curso" +
+                            "---------------------------------------------------" + productoABuscar.toString());
+                    Toast.makeText(context, "Aniadido" + productoABuscar.getNombreProducto(), Toast.LENGTH_SHORT ).show();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void recargaProductosPedido(){
+
+        Container.pedidoEnCurso.getItems();
 
 
     }

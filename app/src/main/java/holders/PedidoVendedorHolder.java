@@ -13,11 +13,11 @@ import co.com.hgr.cestadelacompra.R;
  * cambiar los findviewbyid, estan los de usuario!!
  */
 
-public class PedidoHolder extends RecyclerView.ViewHolder {
+public class PedidoVendedorHolder extends RecyclerView.ViewHolder {
 
     private View view;
 
-    public PedidoHolder(View itemView) {
+    public PedidoVendedorHolder(View itemView) {
         super(itemView);
         this.view = itemView;
 
@@ -38,12 +38,17 @@ public class PedidoHolder extends RecyclerView.ViewHolder {
         field.setText(cadena);
     }
 
-    public void SetFechaEntrega(String cadena) {
+    public void setFechaEntrega(String cadena) {
         TextView field = (TextView) view.findViewById(R.id.lblEmail);
         field.setText(cadena);
     }
 
-    public void SetEntregado(String cadena) {
+    public void setEntregado(String cadena) {
+        TextView field = (TextView) view.findViewById(R.id.lblEmail);
+        field.setText(cadena);
+    }
+
+    public void setPrecioTotalPedido(String cadena) {
         TextView field = (TextView) view.findViewById(R.id.lblEmail);
         field.setText(cadena);
     }

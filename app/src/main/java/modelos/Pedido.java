@@ -1,6 +1,7 @@
 package modelos;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Triboga on 22/4/18.
@@ -11,18 +12,23 @@ public class Pedido {
     private String pedidoDe;
     private String pedidoA;
     private String fechaPedido;
-    private Map<String, Producto>items;
+    private List<Item> items;
     private String fechaEntregaPedido;
+    private Boolean entregado;
 
 
-    public Pedido(){}
+    public Pedido(){
+        items = new ArrayList<>(); {
+        }
+    }
 
-    public Pedido(String pedidoDe, String pedidoA, String fechaPedido, Map<String, Producto> items, String fechaEntregaPedido) {
+    public Pedido(String pedidoDe, String pedidoA, String fechaPedido, String fechaEntregaPedido, Boolean entregado) {
         this.pedidoDe = pedidoDe;
         this.pedidoA = pedidoA;
         this.fechaPedido = fechaPedido;
-        this.items = items;
+        this.items = new ArrayList<>();
         this.fechaEntregaPedido = fechaEntregaPedido;
+        this.entregado = entregado;
     }
 
     public String getPedidoDe() {
@@ -49,12 +55,20 @@ public class Pedido {
         this.fechaPedido = fechaPedido;
     }
 
-    public Map<String, Producto> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Map<String, Producto> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public Boolean getEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(Boolean entregado) {
+        this.entregado = entregado;
     }
 
     public String getFechaEntregaPedido() {
@@ -74,5 +88,16 @@ public class Pedido {
                 ", items=" + items +
                 ", fechaEntregaPedido='" + fechaEntregaPedido + '\'' +
                 '}';
+    }
+
+    public List<Producto> getProductos() {
+
+        ArrayList<Producto>productos= new ArrayList<>();
+        if (items.size()>0) {
+            for (Item item : items) {
+                productos.add(item.getProducto());
+            }
+        }
+        return productos;
     }
 }

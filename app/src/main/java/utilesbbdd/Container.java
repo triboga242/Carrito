@@ -1,5 +1,6 @@
 package utilesbbdd;
 
+import modelos.Pedido;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
 
@@ -21,4 +22,8 @@ public class Container {
     public static String categoriaProductoAGuardar="";
     //Key categoria seleccionada
     public static String keyCategoriaSeleccionada;
+    //Pedido en curso
+    public static Pedido pedidoEnCurso= new Pedido();
+    //Precio total pedido en curso
+    public static float precioTotalPedidoEnCurso=0f;
 }
