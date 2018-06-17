@@ -16,12 +16,15 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import co.com.hgr.cestadelacompra.ListaArticulosCompradorActivity;
 import modelos.Categoria;
 import modelos.Item;
 import modelos.LocationData;
+import modelos.Pedido;
 import modelos.Producto;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
@@ -357,5 +360,25 @@ public class AyudanteBBDD {
         Container.pedidoEnCurso.getItems();
 
 
+    }
+
+    /**
+     * Aniade un pedido a la bbdd
+     * @param pedidoEnCurso
+     */
+    public void aniadeUnPedido(Pedido pedidoEnCurso) {
+
+        final DatabaseReference dbPedido=FirebaseDatabase.getInstance().getReference()
+                .child("pedido")
+                .child(Container.personaLogueada.getEmailFB() + " -- " + Container.tiendaLogueada.getEmailPedidosFB());
+        Container.precioTotalPedidoEnCurso=0f;
+        for (Item item:Container.pedidoEnCurso.getItems()){
+            Container.precioTotalPedidoEnCurso+=item.getCantidad()*item.getProducto().getPrecioVenta();
+        }
+
+        Date ahora = Calendar.getInstance().getTime();
+        pedidoEnCurso.setFechaPedido(ahora.toString());
+
+        dbPedido.push().setValue(pedidoEnCurso);
     }
 }

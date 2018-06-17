@@ -1,5 +1,7 @@
 package utilesbbdd;
 
+import android.content.Intent;
+
 import modelos.Pedido;
 import modelos.Tienda;
 import modelos.UsuarioPersona;
@@ -26,4 +28,6 @@ public class Container {
     public static Pedido pedidoEnCurso= new Pedido();
     //Precio total pedido en curso
     public static float precioTotalPedidoEnCurso=0f;
+    //Current tocken
+    public static String currentTocken="";
 }

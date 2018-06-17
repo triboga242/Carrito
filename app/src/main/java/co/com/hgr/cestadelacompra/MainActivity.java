@@ -22,7 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 
+import notificaciones.AyudanteNotificaciones;
+import notificaciones.ManagerNotificaciones;
+import notificaciones.ServicioNotificaciones;
 import utilesbbdd.Container;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     //Container.personaLogueada.setTelefono(user.getPhoneNumber());
                     Container.personaLogueada.setEmailFB(user.getEmail().replaceAll("\\.", "_"));
 
+                    Container.currentTocken= FirebaseInstanceId.getInstance().getToken();
 
+                    Log.d("**************+MYTOKEN", "*******************+" + Container.currentTocken);
 
                     startActivity(intent);
                 }

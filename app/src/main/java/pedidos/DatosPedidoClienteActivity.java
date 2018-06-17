@@ -99,6 +99,13 @@ public class DatosPedidoClienteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnGuardarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ayudanteBBDD.aniadeUnPedido(Container.pedidoEnCurso);
+            }
+        });
     }
 
     /**

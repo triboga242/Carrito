@@ -3,8 +3,13 @@ package co.com.hgr.cestadelacompra;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import utilesbbdd.Container;
 
 /**
  * Elegir entre modo vendedor y modo comprador
@@ -26,6 +31,10 @@ public class VendedorCompradorActivity extends AppCompatActivity {
         btnVendedor = (Button) findViewById(R.id.Vendedor);
 
         setListeners();
+        Container.currentTocken= FirebaseInstanceId.getInstance().getToken();
+
+        Log.d("**************+MYTOKEN", "+cBY1WoC-0BE:APA91bFk3cjNj9AgLNDi_4KO-FqSFcqPnp7thuyjhn9d4mc6RxCTb7wUHpFrMC0FKmWeW2lmwpXFpvuDww0lR8qiJbc-x0uqOl6QTmV_cDghxdqzDmgrwlZSVNGat7tHltjNc_Uam-Wh" + Container.currentTocken);
+
     }
 
     private void setListeners() {

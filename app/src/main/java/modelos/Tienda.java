@@ -10,6 +10,8 @@ import utilesbbdd.Container;
 public class Tienda {
 
     private String emailDuenio;
+    private String emailDuenioFB;
+    private String emailPedidosFB;
     private String nombre;
     private String latitud;
     private String longitud;
@@ -21,6 +23,7 @@ public class Tienda {
     public Tienda() {
 
         this.emailDuenio = Container.personaLogueada.getEmail();
+        //this.emailDuenioFB = Container.personaLogueada.getEmail().replaceAll("\\.", "_");
         this.nombre = "";
         this.horario = " -- ";
         this.emailPedidos = "";
@@ -32,7 +35,6 @@ public class Tienda {
 
 
     public Tienda(String emailDuenio, String nombre, String localizacion, String latitud, String longitud, String horario, String emailPedidos, String telefono, String direccion) {
-        this.emailDuenio = emailDuenio;
         this.nombre = nombre;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -65,6 +67,8 @@ public class Tienda {
 
     public void setEmailDuenio(String emailDuenio) {
         this.emailDuenio = emailDuenio;
+        this.emailDuenioFB = emailDuenio.replaceAll("\\.", "_");
+
     }
 
     public String getNombre() {
@@ -90,6 +94,7 @@ public class Tienda {
 
     public void setEmailPedidos(String emailPedidos) {
         this.emailPedidos = emailPedidos;
+        this.emailPedidosFB = emailPedidos.replaceAll("\\.", "_");
     }
 
     public String getTelefono() {
@@ -106,6 +111,22 @@ public class Tienda {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getEmailDuenioFB() {
+        return emailDuenioFB;
+    }
+
+    public void setEmailDuenioFB(String emailDuenioFB) {
+        this.emailDuenioFB = emailDuenioFB;
+    }
+
+    public String getEmailPedidosFB() {
+        return emailPedidosFB;
+    }
+
+    public void setEmailPedidosFB(String emailPedidosFB) {
+        this.emailPedidosFB = emailPedidosFB;
     }
 
     @Override

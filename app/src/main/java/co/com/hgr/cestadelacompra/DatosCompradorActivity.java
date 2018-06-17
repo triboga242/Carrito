@@ -68,6 +68,11 @@ public class DatosCompradorActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
+                new Intent(DatosCompradorActivity.this,
+                        VendedorCompradorActivity.class));
+
+      /*
         if (ayudanteBBDD.compruebaUsuarioRegistrado()) {
             ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
                     new Intent(DatosCompradorActivity.this,
@@ -82,7 +87,9 @@ public class DatosCompradorActivity extends AppCompatActivity {
             ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
                     new Intent(DatosCompradorActivity.this,
                             VendedorCompradorActivity.class));
+
         }
+        */
     }
 }
 
