@@ -66,25 +66,6 @@ public class AccountActivity extends AppCompatActivity {
         ayudanteBBDD.modoPersonas();
 
 
-      /**  mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                if (firebaseAuth.getCurrentUser()!=null){
-                    Toast.makeText(getApplicationContext(), "usuario "+user.getPhotoUrl(),Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AccountActivity.this, VendedorCompradorActivity.class);
-                   // startActivity(intent);
-                }
-            }
-        };
-
-        Log.e(TAGLOG, usuario.getEmail().toString());
-
-*/
 
       if (ayudanteBBDD.compruebaUsuarioRegistrado()){
           Intent intent = new Intent(AccountActivity.this, VendedorCompradorActivity.class);
@@ -125,25 +106,7 @@ public class AccountActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
-      /*  eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                UsuarioPersona pred = dataSnapshot.getValue(UsuarioPersona.class);
-                if (pred!=null) {
-                    nombre.setText(pred.getNombre());
-                    apellidos.setText(pred.getApellidos() + "ºC");
-                    email.setText(pred.getEmail() + "%");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAGLOG, "Error!", databaseError.toException());
-            }
-        };
-
-        dbUsuario.addValueEventListener(eventListener);*/
 
         logOutBtn = (Button)findViewById(R.id.logOutBtn);
         logOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -165,11 +128,5 @@ public class AccountActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         mAdapter.cleanup();
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-       // mAuth.addAuthStateListener(mAuthListener);
     }
 }

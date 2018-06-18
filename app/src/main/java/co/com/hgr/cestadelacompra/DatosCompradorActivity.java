@@ -14,9 +14,7 @@ import modelos.UsuarioPersona;
 import utilesbbdd.AyudanteBBDD;
 
 /**
- * TODO Creo que voy a obviar esta parte, ya que con el logeo de Google tengo el nombre, tlfn y email.
- * Preguntar si el email del usuario ya está en la bbdd, si es así, pasar directamente a la
- * actividad de lista de tiendas.
+ *Clase para recopilar los datos del usuario
  *
  */
 public class DatosCompradorActivity extends AppCompatActivity {
@@ -72,24 +70,6 @@ public class DatosCompradorActivity extends AppCompatActivity {
                 new Intent(DatosCompradorActivity.this,
                         VendedorCompradorActivity.class));
 
-      /*
-        if (ayudanteBBDD.compruebaUsuarioRegistrado()) {
-            ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
-                    new Intent(DatosCompradorActivity.this,
-                            VendedorCompradorActivity.class));
-        } else {
-            UsuarioPersona persona = new UsuarioPersona(
-                    usuario.getDisplayName(),
-                    apellidos.getText().toString(),
-                    usuario.getEmail(),
-                    usuario.getPhoneNumber());
-            ayudanteBBDD.aniadeUnaPersona(persona);
-            ayudanteBBDD.compruebaUsuarioLogueadoYpasaAotraActividad(this,
-                    new Intent(DatosCompradorActivity.this,
-                            VendedorCompradorActivity.class));
-
-        }
-        */
     }
 }
 
