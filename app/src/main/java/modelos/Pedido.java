@@ -17,6 +17,7 @@ public class Pedido {
     private Boolean entregado;
 
 
+
     public Pedido(){
         items = new ArrayList<>(); {
         }

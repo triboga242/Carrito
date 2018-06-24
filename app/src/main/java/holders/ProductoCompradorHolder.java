@@ -9,6 +9,7 @@ import android.widget.TextView;
 import co.com.hgr.cestadelacompra.R;
 import modelos.Producto;
 import utilesbbdd.AyudanteBBDD;
+import utilesbbdd.Container;
 
 /**
  * Created by Triboga on 7/5/18.
@@ -24,7 +25,7 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
     public ProductoCompradorHolder(View itemView) {
         super(itemView);
         this.view = itemView;
-        ayudanteBBDD=new AyudanteBBDD();
+        ayudanteBBDD = new AyudanteBBDD();
     }
 
     public void setNombreArticulo(String cadena) {
@@ -42,7 +43,7 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
         field.setText(cadena);
     }
 
-    public String getCantidadArticulo(){
+    public String getCantidadArticulo() {
         TextView field = (TextView) view.findViewById(R.id.txtvDescripcionArticulo);
         return field.getText().toString();
     }
@@ -52,17 +53,17 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
         field.setText(cadena);
     }
 
-    public String getPrecioYUnidadDeVentaArticulo(){
+    public String getPrecioYUnidadDeVentaArticulo() {
         TextView field = (TextView) view.findViewById(R.id.txtvPrecioYUnidadVentaArticulo);
         return field.getText().toString();
     }
 
-    public String getNombreArticulo(){
+    public String getNombreArticulo() {
         TextView field = (TextView) view.findViewById(R.id.txtvNombreArticulo);
         return field.getText().toString();
     }
 
-    public String getDescripcionArticulo(){
+    public String getDescripcionArticulo() {
         TextView field = (TextView) view.findViewById(R.id.txtvDescripcionArticulo);
         return field.getText().toString();
     }
@@ -70,7 +71,7 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
     public void setBotonEditarArticulo(final Context context) {
         Button btnEditarArticulo = (Button) view.findViewById(R.id.btnEditarArticulo);
         btnEditarArticulo.setText("Añadir");
-      //  btnEditarArticulo.setVisibility(View.GONE);
+        //  btnEditarArticulo.setVisibility(View.GONE);
         btnEditarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +82,7 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
 
     public void setBotonProductoAgotado() {
         Button botonProductoAgotado = (Button) view.findViewById(R.id.btnArticuloAgotado);
-       // botonProductoAgotado.setVisibility(View.GONE);
+        // botonProductoAgotado.setVisibility(View.GONE);
         botonProductoAgotado.setText("Informacion");
     }
 
@@ -90,13 +91,17 @@ public class ProductoCompradorHolder extends RecyclerView.ViewHolder {
         botonBorrarArticulo.setVisibility(View.GONE);
     }
 
-    public Producto creaProducto(){
-        Producto producto= new Producto();
+    public Producto creaProducto() {
+        String[]precioyunidad;
+        String precio = getPrecioYUnidadDeVentaArticulo();
+        precioyunidad =(precio.split(" "));
+        Producto producto = new Producto();
         producto.setNombreProducto(getNombreArticulo());
         producto.setDescripcionProducto(getDescripcionArticulo());
-        //producto.setPrecioVenta();
-
-
+        producto.setPrecioVenta(Double.parseDouble(precioyunidad[0]));
+        producto.setUnidadDeVenta(Integer.parseInt(precioyunidad[3]));
+        producto.setMedidaDeVenta(precioyunidad[4]);
+        Container.precioTotalPedidoEnCurso+=Double.parseDouble(precioyunidad[0]);
         return producto;
     }
 }

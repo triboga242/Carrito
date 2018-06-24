@@ -378,6 +378,8 @@ public class AyudanteBBDD {
 
         Date ahora = Calendar.getInstance().getTime();
         pedidoEnCurso.setFechaPedido(ahora.toString());
+        pedidoEnCurso.setPedidoA(Container.tiendaLogueada.getEmailPedidosFB());
+
 
         dbPedido.push().setValue(pedidoEnCurso);
     }

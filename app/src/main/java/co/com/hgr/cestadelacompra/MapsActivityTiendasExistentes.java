@@ -118,9 +118,13 @@ public class MapsActivityTiendasExistentes extends FragmentActivity implements O
     public void setElementosVista(){
 
         direccion = (TextView) findViewById(R.id.textView);
+        direccion.setText("Seleccione la tienda");
         buscarDireccion = (EditText) findViewById(R.id.editText);
+        buscarDireccion.setVisibility(View.GONE);
         btnBuscarDireccion=(Button) findViewById(R.id.button4);
+        btnBuscarDireccion.setVisibility(View.GONE);
         btnGuardarDireccion=(Button)findViewById(R.id.button5);
+        btnGuardarDireccion.setText("Entrar");
 
     }
 

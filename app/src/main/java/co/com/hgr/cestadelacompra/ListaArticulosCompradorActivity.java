@@ -51,6 +51,7 @@ public class ListaArticulosCompradorActivity extends AppCompatActivity {
      */
     private void findElementosVista(){
         btnDatosPedido=(Button)findViewById(R.id.btn_nuevo_articulo_tienda);
+        btnDatosPedido.setText("Volver al carrito");
         btnDatosPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +81,7 @@ public class ListaArticulosCompradorActivity extends AppCompatActivity {
                 productoHolder.setNombreArticulo(producto.getNombreProducto());
                 productoHolder.setDescripcionArticulo(producto.getDescripcionProducto());
                 productoHolder.setPrecioYUnidadDeVentaArticulo(
-                        producto.getPrecioVenta() + " x " + producto.getUnidadDeVenta()
+                        producto.getPrecioVenta() + " € x " + producto.getUnidadDeVenta() + " " + producto.getMedidaDeVenta()
                 );
                 productoHolder.setBotonBorrarArticulo();
                 productoHolder.setBotonEditarArticulo(ListaArticulosCompradorActivity.this);

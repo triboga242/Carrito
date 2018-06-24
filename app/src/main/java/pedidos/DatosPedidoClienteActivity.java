@@ -73,6 +73,11 @@ public class DatosPedidoClienteActivity extends AppCompatActivity {
         btnAniadeArticuloAPedido=(Button)findViewById(R.id.btnAniadirProducto);
         btnReiniciaPedido =(Button)findViewById(R.id.btnReiniciarPedido);
         btnGuardarPedido=(Button)findViewById(R.id.bntConfirmarPedido);
+        btnGuardarPedido.setText("Confirma");
+        btnAniadeArticuloAPedido.setText("Categorias");
+
+        btnReiniciaPedido.setVisibility(View.GONE);
+
 
         listaArticulosEnCesta=(ListView)findViewById(R.id.lista_productos_pedido);
     }
@@ -85,6 +90,7 @@ public class DatosPedidoClienteActivity extends AppCompatActivity {
 
         tvNombreTienda.setText(Container.tiendaLogueada.getNombre());
         tvDireccionTienda.setText(Container.tiendaLogueada.getDireccion());
+        tvPrecioTotalPedido.setText(String.valueOf(Container.precioTotalPedidoEnCurso) + " €");
     }
 
 
@@ -143,5 +149,11 @@ public class DatosPedidoClienteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDatosTienda();
     }
 }
